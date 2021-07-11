@@ -11,6 +11,5 @@
 ```
 mvn compile quarkus:dev \
     -Daws.accessKeyId="lok64Ks4G6sDOFQRe5ly" \
-    -Daws.secretAccessKey="YqOtzZcWlfFJhbg8qvwqCD3y9UXBPw9RkR2faqy3" \
-    -Daws.bucketName="camel-s3"
+    -Daws.secretAccessKey="YqOtzZcWlfFJhbg8qvwqCD3y9UXBPw9RkR2faqy3"
 ```
