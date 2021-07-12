@@ -28,7 +28,7 @@ public class S3Resource extends RouteBuilder {
 
         from("direct:getobject")
             .setHeader(AWS2S3Constants.KEY, simple("${in.header.filename}"))
-            .toD("aws2-s3://s3-camel?amazonS3Client=#noobaaClient&deleteAfterRead=false&operation=getObject")
+            .to("aws2-s3://s3-camel?amazonS3Client=#noobaaClient&deleteAfterRead=false&operation=getObject")
             .convertBodyTo(String.class)
             .to("file:///tmp/files/?fileName=${header.CamelAwsS3Key}");
 
