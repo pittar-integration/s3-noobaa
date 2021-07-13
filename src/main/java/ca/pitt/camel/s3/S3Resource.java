@@ -12,21 +12,22 @@ public class S3Resource extends RouteBuilder {
         restConfiguration()
             .bindingMode(RestBindingMode.auto);
 
+        // GET and POST operations.
         rest("/")
+            .get()
+                .to("direct:s3download")
             .post()
-            .to("direct:dosomething");
+                .to("direct:s3upload");
 
-        from("direct:dosomething")
+        // Upload a specific file to an S3 bucket.
+        from("direct:s3upload")
             .log("Body: ${body}")
             .setHeader(AWS2S3Constants.KEY, simple("${in.header.filename}"))
             .convertBodyTo(String.class)
             .to("aws2-s3://{{aws.bucketName}}?amazonS3Client=#noobaaClient");
 
-        rest("/")
-            .get()
-            .to("direct:getobject");
-
-        from("direct:getobject")
+        // Download a specific file from an S3 bucket.
+        from("direct:s3download")
             .setHeader(AWS2S3Constants.KEY, simple("${in.header.filename}"))
             .to("aws2-s3://s3-camel?amazonS3Client=#noobaaClient&deleteAfterRead=false&operation=getObject")
             .convertBodyTo(String.class)
